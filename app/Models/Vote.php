@@ -10,12 +10,16 @@ class Vote extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'voter_ip'
+    ];
+
     public function poll(): BelongsTo
     {
         return $this->belongsTo(Poll::class);
     }
 
-    public function option(): BelongsTo
+    public function pollOption(): BelongsTo
     {
         return $this->belongsTo(PollOption::class);
     }
