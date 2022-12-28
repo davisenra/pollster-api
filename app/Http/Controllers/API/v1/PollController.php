@@ -27,7 +27,8 @@ class PollController extends Controller
     }
 
     /**
-     * Returns the requested poll along with poll options and vote count or throws an exception if no poll is found.
+     * Returns the requested poll along with poll options and vote count or
+     * throws an exception if no poll is found.
      *
      * @param Request $request
      * @return PollResource
@@ -40,7 +41,7 @@ class PollController extends Controller
             $poll->loadMissing('options');
             $poll->loadCount('votes');
         } catch (ModelNotFoundException) {
-            throw new PollNotFoundException('Poll not found', 404);
+            throw new PollNotFoundException();
         }
 
         return new PollResource($poll);
@@ -72,28 +73,34 @@ class PollController extends Controller
                 $poll->options()->save($pollOption);
             }
 
+            $poll->loadMissing('options');
+            $poll->loadCount('votes');
+
             return $poll;
         });
 
-        return new PollResource($poll->loadMissing('options'));
+        return new PollResource($poll);
     }
 
     /**
-     * Deletes referred poll along with poll options or throws an exception if the poll is not found.
+     * Deletes referred poll along with poll options or throws an exception
+     * if the poll is not found.
      *
      * @param Request $request
      * @return JsonResponse
      * @throws PollNotFoundException
      */
-    public function destroy(Request $request)
+    public function destroy(Request $request): JsonResponse
     {
         try {
             $poll = Poll::findOrFail($request->id);
             $poll->delete();
         } catch (ModelNotFoundException) {
-            throw new PollNotFoundException('Poll not found', 404);
+            throw new PollNotFoundException();
         }
 
-        return new JsonResponse(['message' => 'Poll deleted successfully'], 200);
+        return new JsonResponse([
+            'message' => 'Poll deleted successfully'
+        ], 200);
     }
 }
