@@ -5,7 +5,7 @@ namespace App\Exceptions;
 use Exception;
 use Illuminate\Http\JsonResponse;
 
-class PollNotFoundException extends Exception
+class PollIsExpiredException extends Exception
 {
     /**
      * Render the exception into an HTTP response.
@@ -15,7 +15,7 @@ class PollNotFoundException extends Exception
     public function render(): JsonResponse
     {
         return response()->json([
-            'message' => 'Poll not found'
-        ], 404);
+            'message' => 'Poll is expired'
+        ], 403);
     }
 }
