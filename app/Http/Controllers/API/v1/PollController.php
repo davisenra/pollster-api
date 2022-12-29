@@ -6,6 +6,7 @@ use App\Exceptions\PollNotFoundException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePollRequest;
 use App\Http\Resources\PollResource;
+use App\Jobs\SendPollCreatedNotification;
 use App\Models\Poll;
 use App\Models\PollOption;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -78,6 +79,10 @@ class PollController extends Controller
 
             return $poll;
         });
+
+        if (isset($poll->email)) {
+            SendPollCreatedNotification::dispatch($poll);
+        }
 
         return new PollResource($poll);
     }
