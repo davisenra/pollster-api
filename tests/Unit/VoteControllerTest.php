@@ -4,12 +4,12 @@ namespace Tests\Unit;
 
 use App\Models\Poll;
 use App\Models\PollOption;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class VoteTest extends TestCase
+class VoteControllerTest extends TestCase
 {
-    use DatabaseTransactions;
+    use RefreshDatabase;
 
     const BASE_URL = '/api/v1';
 
