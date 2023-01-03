@@ -1,4 +1,4 @@
-> **Pollster**, the polling API.
+## Pollster, *the polling API*.
 
 * This is a personal lab to learn/explore Laravel framework.
 * Currently this repository only holds the back-end code, but there's also a Vue.js client.
